@@ -26,7 +26,7 @@ connectDB();
 console.log("Connecting to Cloudinary...");
 connectCloudinary();
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5175", "http://localhost:5174"];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5175", "http://localhost:5174", "https://drop-basket-groceries-delivery-webs.vercel.app"];
 
 app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
 
