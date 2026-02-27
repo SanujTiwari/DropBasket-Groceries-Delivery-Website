@@ -3,12 +3,11 @@ import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
 import { toast } from 'react-hot-toast'
 
-
-
-//Input feild component
-
+//Input field component
 const InputField = ({ type, placeholder, name, handleChange, address }) => (
-    <input className="w-full px-4 py-3.5 border-2 border-gray-100 rounded-xl outline-none text-gray-700 focus:border-primary focus:bg-green-50/30 transition-all duration-300 placeholder:text-gray-400" type={type}
+    <input
+        className="w-full px-5 py-4 bg-white border-2 border-slate-300 rounded-2xl outline-none text-gray-800 shadow-sm focus:border-primary focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+        type={type}
         placeholder={placeholder}
         name={name}
         onChange={handleChange}
@@ -18,11 +17,11 @@ const InputField = ({ type, placeholder, name, handleChange, address }) => (
 )
 
 const AddAddress = () => {
-    const { axios, user, navigate } = useAppContext();
+    const { axios, user, navigate, setDeliveryAddress } = useAppContext();
     const [address, setAddress] = useState({
         firstName: "",
         lastName: "",
-        email: "",
+        email: user?.email || "",
         street: "",
         city: "",
         state: "",
@@ -30,15 +29,13 @@ const AddAddress = () => {
         country: "",
         phone: "",
     })
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setAddress((prevAddress) => ({
             ...prevAddress, [name]: value
         }))
-        console.log(address);
     }
-
-    const { setDeliveryAddress, fetchAddresses } = useAppContext();
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
@@ -46,14 +43,18 @@ const AddAddress = () => {
             const { data } = await axios.post("/api/address/add", { address });
             if (data.success) {
                 toast.success(data.message);
-                await fetchAddresses();
-                setDeliveryAddress(address);
+
+                // If the backend returns the new address with its ID, use it for automatic selection
+                if (data.newAddress) {
+                    setDeliveryAddress(data.newAddress);
+                }
+
                 navigate("/cart");
             } else {
-                toast.error(data.message);
+                toast.error(data.message || "Failed to save address");
             }
         } catch (error) {
-            console.log(error.message);
+            console.error("Save Address Error:", error);
             toast.error(error.message);
         }
     }
@@ -62,17 +63,25 @@ const AddAddress = () => {
         if (!user) {
             navigate("/cart");
         }
-    }, [user]);
-
-
+    }, [user, navigate]);
 
     return (
-        <div className="mt-16 pb-16">
-            <p className="text-2xl md:text-3xl text-gray-500">Add Shipping <span
-                className='font-semibold text-primary'>Address</span></p>
-            <div className='flex flex-col-reverse md:flex-row justify-between mt-10'>
-                <div className='flex-1 max-w-md'>
-                    <form onSubmit={onSubmitHandler} className='space-y-3 mt-6 text-sm'>
+        <div className="mt-16 pb-20">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <p className="text-xs font-black uppercase tracking-[0.25em] text-gray-400">Checkout</p>
+                    <p className="text-3xl md:text-4xl font-black text-[#1a202c] mt-1">
+                        Add Shipping <span className="text-primary">Address</span>
+                    </p>
+                    <p className="text-sm md:text-base text-gray-500 font-bold mt-3">
+                        Save a default address so your groceries reach the right door every time.
+                    </p>
+                </div>
+            </div>
+
+            <div className="flex flex-col-reverse md:flex-row justify-between mt-10 gap-10">
+                <div className="flex-1 max-w-xl">
+                    <form onSubmit={onSubmitHandler} className="space-y-4 text-sm bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-gray-100">
 
                         <div className='grid grid-cols-2 gap-4'>
                             <InputField
@@ -97,8 +106,8 @@ const AddAddress = () => {
                             address={address}
                             name='email'
                             type="email"
-                            placeholder="Email address" />
-
+                            placeholder="Email address"
+                        />
 
                         <InputField
                             handleChange={handleChange}
@@ -131,8 +140,9 @@ const AddAddress = () => {
                                 handleChange={handleChange}
                                 address={address}
                                 name='zipcode'
-                                type="number"
-                                placeholder="Zip Code" />
+                                type="text"
+                                placeholder="Zip Code"
+                            />
                             <InputField
                                 handleChange={handleChange}
                                 address={address}
@@ -150,18 +160,15 @@ const AddAddress = () => {
                             placeholder="Phone"
                         />
 
-                        <button className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase" >
+                        <button className="w-full mt-4 bg-gradient-to-r from-primary to-green-600 text-white py-4 rounded-2xl font-black hover:from-green-700 hover:to-green-700 transition cursor-pointer uppercase tracking-wide shadow-[0_10px_25px_-10px_rgba(34,197,94,0.6)]" >
                             Save Address
                         </button>
-
-
-
-
                     </form>
                 </div>
-                <img className='w-full sm:w-[450px] md:w-[600px] object-cover mt-10 md:mt-0' src={assets.add_address_iamge} alt="" />
+                <div className="flex-1 flex items-center justify-center">
+                    <img className="w-full sm:w-[420px] md:w-[520px] object-contain mt-6 md:mt-0" src={assets.add_address_iamge} alt="Add address illustration" />
+                </div>
             </div>
-
         </div>
     )
 }

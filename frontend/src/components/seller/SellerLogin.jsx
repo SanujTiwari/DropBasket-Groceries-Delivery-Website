@@ -4,10 +4,15 @@ import { toast } from 'react-hot-toast'
 
 const SellerLogin = () => {
 
-  const { setIsSeller, navigate, axios } = useAppContext()
+  const { isSeller, setIsSeller, navigate, axios } = useAppContext()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+React.useEffect(() => {
+  if (isSeller) {
+    navigate("/seller");
+  }
+}, [isSeller, navigate]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault()
@@ -17,12 +22,12 @@ const SellerLogin = () => {
 
       if (data.success) {
         setIsSeller(true)
-        navigate("/seller/dashboard")
+        navigate("/seller")
       } else {
         toast.error(data.message)
       }
 
-    } catch (error) {
+    } catch {
       toast.error("Login failed")
     }
   }

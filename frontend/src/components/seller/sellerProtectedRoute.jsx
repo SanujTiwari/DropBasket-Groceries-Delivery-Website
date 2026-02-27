@@ -4,11 +4,11 @@ import { useAppContext } from "../../context/AppContext";
 const SellerProtectedRoute = ({ children }) => {
     const { isSeller, isSellerLoading } = useAppContext();
 
-    if (isSellerLoading) return <div>Loading...</div>;
+    if (isSellerLoading) {
+        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    }
 
-    if (!isSeller) return <Navigate to="/seller" />;
-
-    return children;
+    return isSeller ? children : <Navigate to="/" />;
 };
 
 export default SellerProtectedRoute;

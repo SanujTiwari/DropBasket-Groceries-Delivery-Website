@@ -5,19 +5,16 @@ const authUser = (req, res, next) => {
         const { token } = req.cookies;
 
         if (!token) {
-            return res.json({ success: false });
+            return res.json({ success: false, message: "Token missing. Please login again." });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        console.log("AUTH DEBUG: decoded token:", decoded);
 
         req.userId = decoded.id;
 
         next();
     } catch (error) {
-        console.error("AUTH ERROR:", error.message);
-        return res.json({ success: false });
+        return res.json({ success: false, message: "Authentication failed. Please login again." });
     }
 }
 

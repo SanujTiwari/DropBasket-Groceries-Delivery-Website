@@ -1,18 +1,19 @@
 import React from 'react'
-import { assets } from '../assets/assets'
 import { categories } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 const Categories = () => {
     const navigate = useNavigate();
     return (
-        <div className="mt-16">
+        <div id="categories" className="mt-16">
             <p className="text-2xl md:text-3xl font-medium">Categories</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 mt-6 gap-6">
 
                 {categories.map((category, index) => (
 
-                    <div key={index} className="group cursor-pointer p-4 rounded-[2.5rem] flex flex-col items-center justify-center text-center transition-all duration-500 hover:shadow-2xl hover:shadow-green-100 hover:-translate-y-2 border border-transparent hover:border-green-100"
+                    <div
+                        key={index}
+                        className="group cursor-pointer p-4 rounded-[2.5rem] flex flex-col items-center justify-center text-center transition-all duration-500 hover:shadow-2xl hover:shadow-teal-100 hover:-translate-y-2 border border-gray-200/70 hover:border-teal-200 bg-white/70"
                         style={{ backgroundColor: category.bgColor }}
                         onClick={() => {
                             navigate(`/products/${category.path.toLowerCase()}`);

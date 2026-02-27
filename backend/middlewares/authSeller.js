@@ -1,20 +1,23 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
-const authSeller = (req, res, next) => {
+const authSeller = async (req, res, next) => {
     try {
-        const token = req.cookies.sellerToken;
+        const { token } = req.cookies;
 
         if (!token) {
-            return res.json({ success: false, message: "Unauthorized" });
+            return res.json({ success: false, message: "Unauthorized: No token provided" });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (decoded.email !== process.env.SELLER_EMAIL) {
-            return res.json({ success: false, message: "Unauthorized" });
+        const user = await User.findById(decoded.id);
+
+        if (!user || user.role !== 'admin') {
+            return res.json({ success: false, message: "Unauthorized: Admins only" });
         }
 
-        req.seller = decoded;
+        req.seller = user;
 
         next();
 

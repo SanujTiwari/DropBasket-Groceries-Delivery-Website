@@ -31,15 +31,27 @@ export const AppContextProvider = ({ children }) => {
             if (data.success) {
                 setUser(data.user);
                 setCartItems(data.cartItems || {});
+
+                if (data.user.role === "admin") {
+                    setIsSeller(true);
+                } else {
+                    setIsSeller(false);
+                }
+
             } else {
+                setUser(null);
                 setCartItems({});
+                setIsSeller(false);
             }
 
-        } catch (error) {
+        } catch {
+            setUser(null);
             setCartItems({});
+            setIsSeller(false);
+        } finally {
+            setIsSellerLoading(false);
         }
     };
-
     // SELLER FETCH
     const fetchSeller = async () => {
         try {
@@ -49,6 +61,24 @@ export const AppContextProvider = ({ children }) => {
             setIsSeller(false);
         } finally {
             setIsSellerLoading(false);
+        }
+    };
+
+    // LOGOUT
+    const logout = async () => {
+        // Optimistic Logout: Clear UI state first for immediate response
+        setUser(null);
+        setIsSeller(false);
+        setCartItems({});
+        toast.success("Logged out successfully");
+        navigate("/");
+
+        try {
+            await axios.get("/api/user/logout");
+        } catch (error) {
+            console.error("Backend logout failed", error);
+            // We don't revert the UI state here because the user intended to logout
+            // and the frontend session is already cleared.
         }
     };
 
@@ -65,9 +95,14 @@ export const AppContextProvider = ({ children }) => {
     const fetchAddresses = async () => {
         try {
             const { data } = await axios.post("/api/address/get");
-            if (data.success) setAddresses(data.addresses);
+            if (data.success) {
+                setAddresses(data.addresses);
+                return data.addresses;
+            }
+            return [];
         } catch (error) {
             console.log(error.message);
+            return [];
         }
     }
 
@@ -136,10 +171,8 @@ export const AppContextProvider = ({ children }) => {
 
     // INITIAL LOAD
     useEffect(() => {
-        // fetchUser(); // Removed for manual login as requested
-        fetchSeller();
+        fetchUser();
         fetchProducts();
-        // fetchAddresses(); // Should only fetch after login
     }, []);
 
     // update database cart items
@@ -158,13 +191,25 @@ export const AppContextProvider = ({ children }) => {
         if (user) {
             updateCart()
         }
-    }, [cartItems])
+    }, [cartItems, user])
+
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     const value = {
         navigate, user, setUser, isSeller, setIsSeller, products, cartItems, setCartItems,
         showUserLogin, setShowUserLogin, searchQuery, setSearchQuery, currency, getCartCount, getCartAmount,
         addToCart, updateCartItem, removeFromCart, addresses, setAddresses, deliveryAddress,
-        setDeliveryAddress, fetchAddresses, axios, setCartItems
+        setDeliveryAddress, fetchAddresses, axios, isSellerLoading, setIsSellerLoading, logout
     };
 
     return (

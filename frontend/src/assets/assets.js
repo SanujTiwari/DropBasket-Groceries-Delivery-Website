@@ -81,6 +81,7 @@ import bottles_new_image from "./bottles_image.jpg";
 import quinoa_image from "./quinoa_image.png";
 import brown_rice_image from "./brown_rice_image.png";
 import barley_image from "./barley_image.png";
+import scooter_rider_user from "./scooter_rider_user.png";
 
 export const assets = {
   logo,
@@ -110,6 +111,7 @@ export const assets = {
   bottom_banner_image_sm,
   add_address_iamge,
   box_icon,
+  scooter_rider_user,
 };
 
 export const categories = [

@@ -12,14 +12,17 @@ import ProductDetails from './pages/ProductDetails'
 import Cart from './pages/Cart'
 import AddAddress from './pages/AddAddress'
 import MyOrders from './pages/MyOrders'
-import SellerLogin from './components/seller/SellerLogin'
 import SellerLayout from './pages/seller/SellerLayout'
 import AddProduct from './pages/seller/AddProduct'
 import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
 import SellerProtectedRoute from "./components/seller/sellerProtectedRoute";
+import UserProtectedRoute from './components/UserProtectedRoute'
 import Loading from './components/Loading'
 import Contact from './pages/Contact'
+import FAQ from './pages/FAQ'
+import Deals from './pages/Deals'
+import Settings from './pages/Settings'
 
 const App = () => {
 
@@ -28,8 +31,9 @@ const App = () => {
 
   return (
     <div className='text-default min-h-screen text-gray-700 bg-white'>
-      {issellerpath ? null : <Navbar />}
-      {showUserLogin ? <Login /> : null}
+      
+      {!issellerpath && <Navbar />}
+      {showUserLogin && <Login />}
 
       <Toaster />
 
@@ -37,21 +41,24 @@ const App = () => {
         <Routes>
 
           <Route path='/' element={<Home />} />
-          <Route path='/products' element={<AllProducts />} />
-          <Route path='/products/:category' element={<ProductCategory />} />
-          <Route path='/products/:category/:id' element={<ProductDetails />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/add-address' element={<AddAddress />} />
-          <Route path='/my-orders' element={<MyOrders />} />
-          <Route path='/contact' element={<Contact />} />
+          <Route path='/products' element={<UserProtectedRoute><AllProducts /></UserProtectedRoute>} />
+          <Route path='/products/:category' element={<UserProtectedRoute><ProductCategory /></UserProtectedRoute>} />
+          <Route path='/products/:category/:id' element={<UserProtectedRoute><ProductDetails /></UserProtectedRoute>} />
+          <Route path='/cart' element={<UserProtectedRoute><Cart /></UserProtectedRoute>} />
+          <Route path='/add-address' element={<UserProtectedRoute><AddAddress /></UserProtectedRoute>} />
+          <Route path='/my-orders' element={<UserProtectedRoute><MyOrders /></UserProtectedRoute>} />
+          <Route path='/contact' element={<UserProtectedRoute><Contact /></UserProtectedRoute>} />
+          <Route path='/faq' element={<UserProtectedRoute><FAQ /></UserProtectedRoute>} />
+          <Route path='/deals' element={<UserProtectedRoute><Deals /></UserProtectedRoute>} />
+          <Route path='/settings' element={<UserProtectedRoute><Settings /></UserProtectedRoute>} />
           <Route path='/loader' element={<Loading />} />
-          <Route path='/seller' element={<SellerLogin />} />
-          <Route path='/seller/dashboard' element={
+
+          {/* ✅ SINGLE SELLER ROUTE */}
+          <Route path='/seller' element={
             <SellerProtectedRoute>
               <SellerLayout />
             </SellerProtectedRoute>
-          }
-          >
+          }>
             <Route index element={<AddProduct />} />
             <Route path='product-list' element={<ProductList />} />
             <Route path='orders' element={<Orders />} />
@@ -60,7 +67,7 @@ const App = () => {
         </Routes>
       </div>
 
-      {issellerpath ? null : <Footer />}
+      {!issellerpath && <Footer />}
     </div>
   )
 }

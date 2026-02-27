@@ -25,15 +25,15 @@ export const addAddress = async (req, res) => {
             street,
             city,
             state,
-            zipcode: Number(zipcode),
+            zipcode,
             country,
-            phone: Number(phone)
+            phone
         })
 
         console.log("Final Address Object for save:", newAddress);
         await newAddress.save();
 
-        res.json({ success: true, message: 'Address added Successfully' })
+        res.json({ success: true, message: 'Address added Successfully', newAddress })
     } catch (error) {
         console.error("Add Address Detailed Error:", error);
         res.json({ success: false, message: `Address validation failed: ${error.message}` })
