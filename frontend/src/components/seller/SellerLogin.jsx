@@ -18,7 +18,7 @@ React.useEffect(() => {
     event.preventDefault()
 
     try {
-      const { data } = await axios.post("/api/seller/login", { email, password })
+      const { data } = await axios.post("/seller/login", { email, password });
 
       if (data.success) {
         setIsSeller(true)

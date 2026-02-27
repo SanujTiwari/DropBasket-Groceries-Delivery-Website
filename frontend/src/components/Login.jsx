@@ -23,50 +23,48 @@ const Login = () => {
 
   const isAdminFlow = useMemo(() => role === "admin", [role]);
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    setLoading(true);
+ const onSubmitHandler = async (event) => {
+  event.preventDefault();
+  setLoading(true);
 
-    try {
-      const url = isSignup
-        ? "/api/user/register"
-        : isAdminFlow
-          ? "/api/seller/login"
-          : "/api/user/login";
+  try {
+    const url = isSignup
+      ? "/auth/register"
+      : isAdminFlow
+        ? "/seller/login"
+        : "/auth/login";
 
-      const payload = isSignup
-        ? { name, email, password, role }
-        : isAdminFlow
-          ? { email, password }
-          : { email, password, role };
+    const payload = isSignup
+      ? { name, email, password, role }
+      : { email, password };
 
-      const { data } = await axios.post(url, payload);
+    const { data } = await axios.post(url, payload);
 
-      if (data.success) {
-        setUser(data.user);
-        setShowUserLogin(false);
+    if (data.success) {
+      setUser(data.user);
+      setShowUserLogin(false);
 
-        const shouldGoSeller = isAdminFlow || data.user.role === "admin";
+      const shouldGoSeller = isAdminFlow || data.user.role === "admin";
 
-        setIsSeller(shouldGoSeller);
-        setIsSellerLoading(false);
-        navigate(shouldGoSeller ? "/seller" : "/");
+      setIsSeller(shouldGoSeller);
+      setIsSellerLoading(false);
+      navigate(shouldGoSeller ? "/seller" : "/");
 
-        toast.success(
-          isSignup ? "Account created successfully" : "Login successful"
-        );
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(
-        error.response?.data?.message || "Authentication failed"
+      toast.success(
+        isSignup ? "Account created successfully" : "Login successful"
       );
-    } finally {
-      setLoading(false);
+    } else {
+      toast.error(data.message);
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error(
+      error.response?.data?.message || "Authentication failed"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div
