@@ -29,10 +29,10 @@ const Login = () => {
 
   try {
     const url = isSignup
-      ? "/auth/register"
+      ? "/api/user/register"
       : isAdminFlow
-        ? "/seller/login"
-        : "/auth/login";
+        ? "/api/seller/login"
+        : "/api/user/login";
 
     const payload = isSignup
       ? { name, email, password, role }

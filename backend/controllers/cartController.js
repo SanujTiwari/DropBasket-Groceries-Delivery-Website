@@ -5,8 +5,6 @@ export const updateCart = async (req, res) => {
         const userId = req.userId;
         const { cartItems } = req.body;
 
-        console.log("USER ID:", userId);
-        console.log("CART:", cartItems);
 
         if (!userId) {
             return res.json({ success: false, message: "Unauthorized" });

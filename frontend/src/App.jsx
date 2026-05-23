@@ -16,7 +16,7 @@ import SellerLayout from './pages/seller/SellerLayout'
 import AddProduct from './pages/seller/AddProduct'
 import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
-import SellerProtectedRoute from "./components/seller/sellerProtectedRoute";
+import SellerProtectedRoute from "./components/seller/SellerProtectedRoute";
 import UserProtectedRoute from './components/UserProtectedRoute'
 import Loading from './components/Loading'
 import Contact from './pages/Contact'
@@ -41,15 +41,15 @@ const App = () => {
         <Routes>
 
           <Route path='/' element={<Home />} />
-          <Route path='/products' element={<UserProtectedRoute><AllProducts /></UserProtectedRoute>} />
-          <Route path='/products/:category' element={<UserProtectedRoute><ProductCategory /></UserProtectedRoute>} />
-          <Route path='/products/:category/:id' element={<UserProtectedRoute><ProductDetails /></UserProtectedRoute>} />
+          <Route path='/products' element={<AllProducts />} />
+          <Route path='/products/:category' element={<ProductCategory />} />
+          <Route path='/products/:category/:id' element={<ProductDetails />} />
           <Route path='/cart' element={<UserProtectedRoute><Cart /></UserProtectedRoute>} />
           <Route path='/add-address' element={<UserProtectedRoute><AddAddress /></UserProtectedRoute>} />
           <Route path='/my-orders' element={<UserProtectedRoute><MyOrders /></UserProtectedRoute>} />
-          <Route path='/contact' element={<UserProtectedRoute><Contact /></UserProtectedRoute>} />
-          <Route path='/faq' element={<UserProtectedRoute><FAQ /></UserProtectedRoute>} />
-          <Route path='/deals' element={<UserProtectedRoute><Deals /></UserProtectedRoute>} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='/deals' element={<Deals />} />
           <Route path='/settings' element={<UserProtectedRoute><Settings /></UserProtectedRoute>} />
           <Route path='/loader' element={<Loading />} />
 

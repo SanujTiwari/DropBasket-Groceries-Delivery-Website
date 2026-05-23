@@ -6,7 +6,8 @@ import User from "../models/User.js";
 // Place Order COD
 export const placeOrderCOD = async (req, res) => {
   try {
-    const { userId, items, address } = req.body;
+    const userId = req.userId;
+    const { items, address } = req.body;
 
     if (!address || items.length === 0) {
       return res.json({ success: false, message: "All fields are required" });
@@ -39,7 +40,8 @@ export const placeOrderCOD = async (req, res) => {
 //Place order Stripe: /api/order/stripe
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { userId, items, address } = req.body;
+    const userId = req.userId;
+    const { items, address } = req.body;
     const {origin}=req.headers;
 
 
@@ -118,7 +120,7 @@ export const stripeWebhooks=async (request,response)=>{
     try {
       event=stripeInstance.webhooks.constructEvent(request.body,sig,process.env.STRIPE_WEBHOOK_SECRET);
     } catch (error) {
-      response.status(400).send(`Webhook error: ${error.message}`);
+      return response.status(400).send(`Webhook error: ${error.message}`);
     }
 
     //Handle the event
