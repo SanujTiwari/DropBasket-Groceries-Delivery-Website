@@ -87,11 +87,11 @@ const Cart = () => {
 
       {/* LEFT - CART ITEMS */}
       <div className="flex-1 w-full">
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-green-100">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-800">
-            Shopping Cart
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-green-100">
+          <h1 className="text-2xl md:text-3xl font-extrabold mb-2 text-gray-900 tracking-tight uppercase italic">
+            Shopping <span className="text-primary font-serif">Cart</span>
           </h1>
-          <p className="text-primary font-semibold mb-6">
+          <p className="text-emerald-600 font-medium mb-6 text-sm">
             {getCartCount()} {getCartCount() === 1 ? "item" : "items"} in your cart
           </p>
 
@@ -100,7 +100,7 @@ const Cart = () => {
               {cartArray.map((product, index) => (
                 <div
                   key={index}
-                  className="flex flex-col sm:flex-row gap-4 items-start sm:items-center p-4 bg-gradient-to-r from-green-50 to-lime-50 rounded-xl hover:shadow-md transition border border-green-100"
+                  className="flex flex-col sm:flex-row gap-4 items-start sm:items-center p-4 bg-gradient-to-r from-green-50 to-lime-50 rounded-2xl hover:shadow-md transition-all duration-300 border border-green-100"
                 >
                   {/* Product Image */}
                   <img
@@ -152,13 +152,15 @@ const Cart = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">Your cart is empty</p>
+            <div className="text-center py-16">
+              <p className="text-6xl mb-4">🛒</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Your cart is empty</h3>
+              <p className="text-gray-500 text-sm mb-6">Looks like you haven't added anything yet</p>
               <button
                 onClick={() => navigate("/products")}
-                className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-green-700 transition"
+                className="px-8 py-3 bg-gradient-to-r from-primary to-green-600 text-white rounded-2xl hover:shadow-lg hover:shadow-emerald-200 transition-all duration-300 font-semibold"
               >
-                Continue Shopping
+                Start Shopping
               </button>
             </div>
           )}
@@ -168,9 +170,9 @@ const Cart = () => {
       {/* RIGHT - BILL & CHECKOUT */}
       {cartArray.length > 0 && (
         <div className="w-full lg:max-w-[400px] h-fit">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-green-100 sticky top-24">
+          <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-green-100 sticky top-24">
             {/* Bill Header */}
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 tracking-tight">
               <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
@@ -312,7 +314,7 @@ const Cart = () => {
             <button
               onClick={placeOrder}
               disabled={!deliveryAddress}
-              className="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-3 rounded-lg hover:from-green-700 hover:to-green-700 transition transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg"
+              className="w-full bg-gradient-to-r from-primary to-green-600 text-white font-bold py-3.5 rounded-2xl hover:shadow-lg hover:shadow-emerald-200 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none shadow-md"
             >
               {!deliveryAddress
                 ? "📍 Select Address to Continue"
@@ -323,7 +325,7 @@ const Cart = () => {
 
             <button
               onClick={() => navigate("/products")}
-              className="w-full mt-3 border-2 border-green-300 text-primary font-semibold py-2 rounded-lg hover:bg-green-50 transition"
+              className="w-full mt-3 border-2 border-green-200 text-primary font-semibold py-2.5 rounded-2xl hover:bg-green-50 transition-all duration-300"
             >
               Continue Shopping
             </button>

@@ -19,7 +19,7 @@ const Categories = () => {
                 </div>
                 <button 
                     onClick={() => { navigate('/products'); scrollTo(0,0); }}
-                    className="hidden sm:flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-700 transition group"
+                    className="flex items-center gap-1.5 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition group"
                 >
                     View All
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>

@@ -3,7 +3,7 @@ import { features } from "../assets/assets";
 
 const BottomBanner = () => {
   return (
-    <div className="relative mt-24 px-4 md:px-8 lg:px-16 xl:px-24">
+    <div className="relative mt-24">
       {/* CSS-driven Background with Ambient Glows */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-slate-800 to-green-950 px-8 py-16 md:px-16 md:py-20 shadow-2xl border border-slate-800">
         

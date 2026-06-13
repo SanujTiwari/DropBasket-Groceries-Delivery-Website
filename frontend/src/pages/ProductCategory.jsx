@@ -12,14 +12,16 @@ const ProductCategory = () => {
 
     const filteredProducts = products.filter((product) => product.category.toLowerCase() === category);
     return (
-        <div className="mt-16">
+        <div className="mt-16 animate-fadeIn">
             {searchCategory && (
-                <div className="flex flex-col items-end w-max">
-                    <p className="text-2xl font-medium">
-                        {searchCategory.text.toUpperCase()}
-                    </p>
-
-                    <div className="w-16 h-0.5 bg-primary rounded-full"></div>
+                <div className="flex flex-col items-start w-max mb-10 group">
+                    <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter flex flex-wrap gap-x-3">
+                        <span className="text-[#1a202c]">SHOP</span>
+                        <span className="text-primary">{searchCategory.text.toUpperCase()}</span>
+                        <span className="text-2xl not-italic opacity-20 group-hover:opacity-100 transition-opacity">🛒</span>
+                    </h1>
+                    <div className="w-20 h-1.5 bg-primary rounded-full mt-3 transform origin-left group-hover:scale-x-125 transition-transform duration-500"></div>
+                    <p className="text-gray-400 mt-4 font-bold text-base tracking-tight italic">Browse our fresh selection of {searchCategory.text.toLowerCase()} products.</p>
                 </div>
             )}
             {filteredProducts.length > 0 ? (
@@ -29,10 +31,10 @@ const ProductCategory = () => {
                     ))}
                 </div>
             ) : (
-                <div className="flex items-center justify-center h-[60vh]">
-                    <p className="text-2xl font-medium text-primary">
-                        No products found in this category.
-                    </p>
+                <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200">
+                    <div className="text-6xl mb-4">🫙</div>
+                    <h3 className="text-2xl font-black text-gray-400">No products found</h3>
+                    <p className="text-gray-400 mt-2">No products found in this category yet.</p>
                 </div>
             )}
 

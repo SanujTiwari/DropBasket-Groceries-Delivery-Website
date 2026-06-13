@@ -20,7 +20,7 @@ const Deals = () => {
     }, [products, searchQuery])
 
     return (
-        <div className="mt-16 flex flex-col px-6 md:px-16 lg:px-24 xl:px-32">
+        <div className="mt-16 flex flex-col">
             <div className="flex flex-col items-start w-max mb-12 group">
                 <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter flex flex-wrap gap-x-3">
                     <span className="text-[#1a202c]">HOT</span>

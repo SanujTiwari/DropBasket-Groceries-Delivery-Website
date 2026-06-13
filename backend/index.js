@@ -28,7 +28,8 @@ connectCloudinary();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://drop-basket-groceries-delivery-webs-pi.vercel.app"
+  "https://drop-basket-groceries-delivery-webs.vercel.app",
+  "https://dropbasket-groceries-delivery-website.onrender.com"
 ];
 
 app.use(cors({

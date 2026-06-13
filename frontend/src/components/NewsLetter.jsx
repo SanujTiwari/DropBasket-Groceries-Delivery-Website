@@ -15,7 +15,7 @@ const NewsLetter = () => {
   };
 
   return (
-    <section className="relative mt-24 px-4 md:px-8 lg:px-16 xl:px-24">
+    <section className="relative mt-24">
       {/* Background container with gradient and glowing elements */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-tr from-emerald-950 via-emerald-900 to-teal-900 py-16 px-6 md:py-20 md:px-16 text-center shadow-2xl border border-emerald-800">
         

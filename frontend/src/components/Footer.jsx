@@ -35,7 +35,7 @@ const Footer = () => {
           {/* Quick Links Mapping */}
           {footerLinks.map((section, index) => (
             <div key={index}>
-              <h3 className="text-slate-200 font-extrabold text-sm uppercase tracking-[0.2em] mb-8 opacity-80">
+              <h3 className="text-slate-200 font-semibold text-sm uppercase tracking-[0.2em] mb-6 opacity-80">
                 {section.title}
               </h3>
               <ul className="space-y-4 text-sm text-slate-400 font-medium">
@@ -72,7 +72,7 @@ const Footer = () => {
         <div className="border-t border-slate-800 mb-10"></div>
 
         {/* Bottom Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500 font-bold uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500 font-semibold uppercase tracking-widest">
           <p>© {currentYear} <span className="text-primary">DropBasket</span>. All rights reserved.</p>
           <div className="flex gap-8">
             <Link to="/faq" className="hover:text-primary transition text-slate-400">Privacy</Link>
